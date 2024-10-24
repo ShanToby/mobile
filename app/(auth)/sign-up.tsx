@@ -1,4 +1,4 @@
-import { Alert, Image, ScrollView, Text, View  } from "react-native";
+import { Alert, Image, ScrollView, Text, View } from "react-native";
 import { icons, images } from "@/constant";
 import InputField from "@/components/InputField";
 import { useState } from "react";
@@ -7,9 +7,11 @@ import { Link, router } from "expo-router";
 import OAuth from "@/components/OAuth";
 import { useSignUp } from "@clerk/clerk-expo";
 import { ReactNativeModal } from "react-native-modal";
+import { fetchAPI } from "@/lib/fetch";
+import { StyleSheet } from "react-native";
 
 const SignUp = () => {
-  const { isLoaded, signUp, setActive } = useSignUp()
+  const { isLoaded, signUp, setActive } = useSignUp();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [form, setForm] = useState({
@@ -26,25 +28,25 @@ const SignUp = () => {
 
   const onSignUpPress = async () => {
     if (!isLoaded) {
-      return
+      return;
     }
 
     try {
       await signUp.create({
         emailAddress: form.email,
         password: form.password,
-      })
+      });
 
-      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
 
       setVerification({
         ...verification,
         state: "pending",
       });
     } catch (err: any) {
-     Alert.alert("Error", err.errors[0].longMessage);
+      Alert.alert("Error", err.errors[0].longMessage);
     }
-  }
+  };
 
   const onPressVerify = async () => {
     if (!isLoaded) return;
@@ -53,6 +55,14 @@ const SignUp = () => {
         code: verification.code,
       });
       if (completeSignUp.status === "complete") {
+        await fetchAPI("/(api)/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        });
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({
           ...verification,
@@ -74,17 +84,14 @@ const SignUp = () => {
     }
   };
 
-  return(
-  <ScrollView className="flex-1 bg-white">
-    <View className="flex-1 bg-white">
-      <View className="relative w-full h-[250px]">
-        <Image source={images.signUpCar} className="z-0 w-full h-[250px]"/>
-         <Text className="text-2xl text-black font-JakartaSemiBold
-         absolute bottom-5 left-5">
-          Create Your Account
-         </Text>
-      </View>
-      <View className="p-5">
+  return (
+    <ScrollView style={styles.container}>
+      <View style={styles.flexContainer}>
+        <View style={styles.imageContainer}>
+          <Image source={images.signUpCar} style={styles.image} />
+          <Text style={styles.titleText}>Create Your Account</Text>
+        </View>
+        <View style={styles.formContainer}>
           <InputField
             label="Name"
             placeholder="Enter your name"
@@ -92,14 +99,14 @@ const SignUp = () => {
             value={form.name}
             onChangeText={(value) => setForm({ ...form, name: value })}
           />
-            <InputField
+          <InputField
             label="Email"
             placeholder="Enter your email"
             icon={icons.email}
             value={form.email}
             onChangeText={(value) => setForm({ ...form, email: value })}
           />
-            <InputField
+          <InputField
             label="Password"
             placeholder="Enter your password"
             icon={icons.lock}
@@ -107,21 +114,21 @@ const SignUp = () => {
             value={form.password}
             onChangeText={(value) => setForm({ ...form, password: value })}
           />
-<CustomButton
+          <CustomButton
             title="Sign Up"
             onPress={onSignUpPress}
-            className="mt-6"
+            style={styles.button} // Replaced className with style
           />
-             <OAuth />
+          <OAuth />
           <Link
             href="/sign-in"
-            className="text-lg text-center text-general-200 mt-10"
+            style={styles.link}
           >
             Already have an account?{" "}
-            <Text className="text-primary-500">Log In</Text>
+            <Text style={styles.linkText}>Log In</Text>
           </Link>
-      </View>
-      <ReactNativeModal
+        </View>
+        <ReactNativeModal
           isVisible={verification.state === "pending"}
           onModalHide={() => {
             if (verification.state === "success") {
@@ -129,11 +136,9 @@ const SignUp = () => {
             }
           }}
         >
-          <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
-            <Text className="font-JakartaExtraBold text-2xl mb-2">
-              Verification
-            </Text>
-            <Text className="font-Jakarta mb-5">
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Verification</Text>
+            <Text style={styles.modalText}>
               We've sent a verification code to {form.email}.
             </Text>
             <InputField
@@ -147,40 +152,121 @@ const SignUp = () => {
               }
             />
             {verification.error && (
-              <Text className="text-red-500 text-sm mt-1">
+              <Text style={styles.errorText}>
                 {verification.error}
               </Text>
             )}
             <CustomButton
               title="Verify Email"
               onPress={onPressVerify}
-              className="mt-5 bg-success-500"
+              style={styles.verifyButton}
             />
           </View>
         </ReactNativeModal>
-      <ReactNativeModal isVisible={showSuccessModal}>
-      <View className="bg-white px-7 py-9 rounded-2xll min-h-[300px]">
-      <Image source={images.check} className="w-[110px] h-[110px] mx-auto my-5"/>
-      <Text className="text-3xl font-JakartaBold text-center">
-        Verified
-      </Text>
-      <Text className="text-base text-gray-400 font-Jakarta text-center mt-2">
-        You have successfully verified your account.
-      </Text>
+        <ReactNativeModal isVisible={showSuccessModal}>
+          <View style={styles.modalContainer}>
+            <Image source={images.check} style={styles.successImage} />
+            <Text style={styles.successTitle}>Verified</Text>
+            <Text style={styles.successText}>
+              You have successfully verified your account.
+            </Text>
 
-      <CustomButton
+            <CustomButton
               title="Browse Home"
-              onPress={() =>{
+              onPress={() => {
                 setShowSuccessModal(false);
-              
-                 router.push(`/(root)/(tabs)/home`);}}
-              className="mt-5"
+                router.push(`/(root)/(tabs)/home`);
+              }}
+              style={styles.button} // Replaced className with style
             />
+          </View>
+        </ReactNativeModal>
       </View>
-      </ReactNativeModal>
-    </View>
-  </ScrollView>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  flexContainer: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  imageContainer: {
+    position: "relative",
+    width: "100%",
+    height: 250,
+  },
+  image: {
+    width: "100%",
+    height: 250,
+  },
+  titleText: {
+    fontSize: 24,
+    color: "black",
+    fontFamily: "JakartaSemiBold",
+    position: "absolute",
+    bottom: 5,
+    left: 5,
+  },
+  formContainer: {
+    padding: 20,
+  },
+  button: {
+    marginTop: 24,
+  },
+  link: {
+    textAlign: "center",
+    marginTop: 40,
+  },
+  linkText: {
+    color: "#0286FF", // Adjust to your primary color
+  },
+  modalContainer: {
+    backgroundColor: "white",
+    padding: 28,
+    borderRadius: 16,
+    minHeight: 300,
+  },
+  modalTitle: {
+    fontFamily: "JakartaExtraBold",
+    fontSize: 24,
+    marginBottom: 8,
+  },
+  modalText: {
+    fontFamily: "Jakarta",
+    marginBottom: 20,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+    marginTop: 4,
+  },
+  verifyButton: {
+    marginTop: 20,
+    backgroundColor: "#4CAF50", // Change this to your success color
+  },
+  successImage: {
+    width: 110,
+    height: 110,
+    marginVertical: 20,
+    alignSelf: "center",
+  },
+  successTitle: {
+    fontSize: 30,
+    fontFamily: "JakartaBold",
+    textAlign: "center",
+  },
+  successText: {
+    fontSize: 16,
+    color: "gray",
+    fontFamily: "Jakarta",
+    textAlign: "center",
+    marginTop: 8,
+  },
+});
 
 export default SignUp;

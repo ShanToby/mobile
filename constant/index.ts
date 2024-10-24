@@ -8,6 +8,9 @@ import lock from "@/assets/icons/lock.png";
 import person from "@/assets/icons/person.png";
 import google from "@/assets/icons/google.png";
 import home from "@/assets/icons/home.png";
+import list from "@/assets/icons/list.png";
+import chat from "@/assets/icons/chat.png";
+import profile from "@/assets/icons/profile.png";
 
 export const images = {
     onboard01,
@@ -22,7 +25,10 @@ export const icons = {
     lock,
     person,
     google,
-    home
+    home,
+    list,
+    chat,
+    profile
   };
 
   
