@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons'; 
 
 const largeImage = require('../assets/images/largetruck.jpeg'); 
 const smallImage1 = require('../assets/images/smalltruck1.jpeg'); 
 const smallImage2 = require('../assets/images/smalltruck2.jpeg'); 
 const smallImage3 = require('../assets/images/smalltruck3.jpeg');
+
+const arrowImage = require('../assets/images/arrow.png'); 
 
 const Section4: React.FC = () => {
   const largeUpdate = {
@@ -33,6 +34,7 @@ const Section4: React.FC = () => {
 
   return (
     <View style={styles.sectionWrapper}>
+         <View style={styles.contentWrapper}>
       <Text style={styles.topUpdatesTitle}>* Latest Updates</Text>
       <Text style={styles.newsText}>News and Expert Reviews on Truck</Text>
       <Text style={styles.rentalsText}>Rentals and Services</Text>
@@ -44,7 +46,7 @@ const Section4: React.FC = () => {
             <Text style={styles.largeUpdateDate}>{largeUpdate.date}</Text>
             <Text style={styles.largeUpdateDescription}>{largeUpdate.description}</Text>
             <TouchableOpacity style={styles.arrowButton}>
-              <FontAwesome name="arrow-right" size={15} color="#fff" />
+            <Image source={arrowImage} style={styles.arrowImage} />
             </TouchableOpacity>
           </View>
         </View>
@@ -58,19 +60,19 @@ const Section4: React.FC = () => {
                 <Text style={styles.updateDescription}>{update.description}</Text>
                 <TouchableOpacity style={styles.readMoreButton}>
                   <Text style={styles.readMoreText}>Read More</Text>
+                  <Image source={arrowImage} style={styles.arrowImage2} /> 
                 </TouchableOpacity>
               </View>
             </View>
           ))}
         </View>
       </View>
-
-      {/* View All button with arrow icon */}
       <View style={styles.viewAllContainer}>
         <TouchableOpacity style={styles.viewAllButton}>
           <Text style={styles.viewAllText}>View All</Text>
-          <FontAwesome name="arrow-circle-right" size={15} color="#007bff" style={styles.arrowIcon} />
         </TouchableOpacity>
+        <Image source={arrowImage} style={styles.arrowImage1} /> 
+      </View>
       </View>
     </View>
   );
@@ -81,30 +83,40 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
-    height: 300,
-    backgroundColor: 'grey',
-    width: '90%',
-    left: 20,
+    height: 250,
+    backgroundColor: '#fff',
+    width: '100%',
   },
+  contentWrapper: {
+    backgroundColor: 'rgba(173, 216, 230, 0.1)',
+    padding: 10,
+    width: '99%',
+    left: 2,
+    borderRadius: 10,
+  },
+  
   topUpdatesTitle: {
-    fontSize: 10,
+    fontSize: 5,
     fontWeight: 'bold',
     color: '#007BFF',
     textAlign: 'center',
     marginBottom: 5,
+    top: 8,
   },
   newsText: {
-    fontSize: 15,
+    fontSize: 10,
     color: '#333',
     textAlign: 'center',
     fontWeight: 'bold',
+    top: 8,
   },
   rentalsText: {
-    fontSize: 15,
+    fontSize: 10,
     color: '#333',
     textAlign: 'center',
     fontWeight: 'bold',
     marginBottom: 10,
+    top: 8,
   },
   contentContainer: {
     flexDirection: 'row',
@@ -128,31 +140,32 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'flex-start', // Aligns content to the top
-    alignItems: 'flex-start', // Aligns content to the left
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Overlay with transparency
+    justifyContent: 'flex-start', 
+    alignItems: 'flex-start', 
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', 
     padding: 10,
   },
   largeUpdateTextContainer: {
-    flexDirection: 'column', // Arranges items vertically
+    flexDirection: 'column', 
   },
   largeUpdateDate: {
-    fontSize: 5, // Date font size
+    fontSize: 5,
     color: '#fff',
     marginBottom: 5,
-    top: 90,
+    top: 98,
   },
   largeUpdateDescription: {
-    fontSize: 6, // Description font size
+    fontSize: 6,
     color: '#fff',
     marginBottom: 10,
-    top: 90,
+    top: 98,
+    fontWeight: 'bold',
   },
   arrowButton: {
     padding: 4,
-    backgroundColor: '#007BFF',
     borderRadius: 12,
-    top: 80,
+    top: 88,
+    left: -10,
   },
   smallImagesContainer: {
     width: '35%',
@@ -176,11 +189,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   updateDate: {
-    fontSize: 3,
+    fontSize: 5,
     color: '#666',
   },
   updateDescription: {
-    fontSize: 4,
+    fontSize: 5,
     color: '#333',
     marginVertical: 5,
   },
@@ -201,14 +214,33 @@ const styles = StyleSheet.create({
   viewAllButton: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: 2,
+    paddingHorizontal: 5, 
+    borderRadius: 20,
+    backgroundColor: '#007BFF',
   },
+  
   viewAllText: {
-    fontSize: 12,
-    color: '#007bff',
-    marginRight: 5,
+    fontSize: 5,
+    color: '#fff',
   },
-  arrowIcon: {
-    marginLeft: 5,
+  arrowImage: {
+    width: 8, 
+    height: 8,
+    marginLeft: 5, 
+  },
+  arrowImage1: {
+    width: 7, 
+    height: 7,
+    marginLeft: 5, 
+    left: -5,
+  },
+  arrowImage2: {
+    width: 4, 
+    height: 4,
+    marginLeft: 5, 
+    left: 12,
+    top: -4,
   },
 });
 

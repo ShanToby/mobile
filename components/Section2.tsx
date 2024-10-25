@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-// Import your images
-const bookingImage = require('../assets/images/booking.png'); // Image for Easy Booking Process
-const convenientImage = require('../assets/images/convenient.png'); // Image for Convenient Pick-Up & Return Process
+const bookingImage = require('../assets/images/booking.png'); 
+const convenientImage = require('../assets/images/convenient.png'); 
+const arrowImage = require('../assets/images/arrow.png');
 
 const Section2: React.FC = () => {
   return (
@@ -41,7 +41,6 @@ const Section2: React.FC = () => {
               <Text style={styles.functionalityDescription}>Our streamlined booking process you can reserve a truck or van</Text>
               <Text style={styles.functionalityDescription}>quickly and effortlessly. With just a few clicks, you'll be ready to hit the road</Text>
               <Text style={styles.functionalityDescription}>in no time.</Text>
-              {/* Line below the Easy Booking Process */}
               <View style={styles.line} />
             </View>
           </View>
@@ -57,8 +56,10 @@ const Section2: React.FC = () => {
         </View>
 
         <TouchableOpacity style={styles.bookButton}>
-          <Text style={styles.buttonText}>Book a Rental</Text>
-        </TouchableOpacity>
+  <Text style={styles.buttonText}>Book a Rental</Text>
+  <Image source={arrowImage} style={styles.arrowImage} />
+</TouchableOpacity>
+
       </View>
     </View>
   );
@@ -192,6 +193,14 @@ const styles = StyleSheet.create({
     fontSize: 5,
     top: 3,
   },
+  arrowImage: {
+    width: 10,
+    height: 10,
+    marginLeft: 5,
+    right: -25,
+    top: -4,
+  },
+  
 });
 
 export default Section2;

@@ -1,4 +1,3 @@
-// app/components/Header.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
@@ -26,6 +25,10 @@ const Header = () => {
         <TouchableOpacity style={styles.bookRentalButton}>
           <Text style={styles.bookRentalText}>Book a Rental</Text>
         </TouchableOpacity>
+        <Image 
+          source={require('../assets/images/arrow.png')} 
+          style={styles.arrowImage} 
+        />
       </View>
     </View>
   );
@@ -83,6 +86,11 @@ const styles = StyleSheet.create({
   bookRentalText: {
     color: '#fff',
     fontSize: 4.2,
+  },
+  arrowImage: {
+    width: 10, // Adjust the size as needed
+    height: 10, // Adjust the size as needed
+    alignSelf: 'center', // Center align with the button
   },
 });
 
