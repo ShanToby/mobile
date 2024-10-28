@@ -5,9 +5,15 @@ const bookingImage = require('../assets/images/booking.png');
 const convenientImage = require('../assets/images/convenient.png'); 
 const arrowImage = require('../assets/images/arrow.png');
 
+const lineImage = require('../assets/images/line.png');
+
 const Section2: React.FC = () => {
   return (
     <View style={styles.sectionWrapper}>
+         <View style={[styles.circle2, styles.topLeftCircle]} />
+      <View style={[styles.circle, styles.easyBookingCircle]} />
+      <View style={[styles.circle, styles.convenientPickupCircle]} />
+
       <View style={styles.leftContainer}>
         <View style={styles.imageContainer}>
           <Image 
@@ -26,6 +32,7 @@ const Section2: React.FC = () => {
 
       <View style={styles.rightContainer}>
         <Text style={styles.aboutTitle}>* About Truck Rentals</Text>
+        <Image source={lineImage} style={styles.lineImage} />
         <Text style={styles.subtitle}>Your Trusted Partner for</Text>
         <Text style={styles.subtitle}>Reliable, Affordable Truck &</Text>
         <Text style={styles.subtitle}>Van Rentals</Text>
@@ -134,17 +141,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#007BFF',
     marginBottom: 5,
+    top: 5,
   },
   subtitle: {
     fontSize: 10,
     fontWeight: 'bold',
-    color: '#555',
-    marginBottom: 2, 
   },
   description: {
+    top: 2,
     fontSize: 4,
     color: '#666',
-    marginBottom: 2,
+    lineHeight: 4,
   },
   functionalitySection: {
     marginBottom: 10,
@@ -156,9 +163,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start', 
   },
   functionalityImage: {
-    width: 20, 
-    height: 20,
-    marginRight: 5, 
+    width: 13, 
+    height: 13,
+    marginRight: 3, 
   },
   functionalityTextContainer: {
     flex: 1, 
@@ -201,6 +208,43 @@ const styles = StyleSheet.create({
     top: -4,
   },
   
+  lineImage: {
+    width: '10%',
+    height: 5,
+    right: -18,
+    tintColor: 'rgba(173, 216, 230, 0.8)',
+  },
+
+  circle: {
+    position: 'absolute',
+    width: 8,
+    height: 8,
+    borderRadius: 7.5,
+    zIndex: 1,
+    backgroundColor: 'rgba(0, 123, 255, 0.2)', 
+  },
+
+  circle2: {
+    position: 'absolute',
+    width: 13,
+    height: 13,
+    borderRadius: 7.5,
+    zIndex: 1,
+    backgroundColor: 'rgba(0, 123, 255, 0.2)', 
+  },
+
+  topLeftCircle: {
+    top: 25,
+    left: 155, 
+  },
+  easyBookingCircle: {
+    top: 108,
+    left: 195,
+  },
+  convenientPickupCircle: {
+    top: 137,
+    left: 196,
+  },
 });
 
 export default Section2;

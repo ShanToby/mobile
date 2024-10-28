@@ -11,6 +11,7 @@ const transmissionImage = require('../assets/images/transmission.png');
 const weightImage = require('../assets/images/weight.png');
 const arrowImage = require('../assets/images/arrow.png');
 
+const lineImage = require('../assets/images/line.png');
 
 const Section3: React.FC = () => {
   const vehicles = [
@@ -53,6 +54,7 @@ const Section3: React.FC = () => {
   return (
     <View style={styles.sectionWrapper1}>
       <Text style={styles.topPicksTitle}>* Top Picks</Text>
+      <Image source={lineImage} style={styles.lineImage} />
       <Text style={styles.exploreText}>Explore Our Featured Vans and Trucks</Text>
       <Text style={styles.rentalsText}>Rentals for Your Next Move</Text>
 
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
     color: '#007BFF',
     textAlign: 'center',
     marginBottom: 5,
-    top: -10,
+    top: -8,
   },
   exploreText: {
     fontSize: 10,
@@ -311,6 +313,15 @@ const styles = StyleSheet.create({
     width: 7,
     height: 7,
   },
+
+  lineImage: {
+    width: '5%',
+    height: 5,
+    top: -13,
+    tintColor: 'rgba(173, 216, 230, 0.8)',
+  },
+
+
 });
 
 export default Section3;

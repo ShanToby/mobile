@@ -8,6 +8,8 @@ const smallImage3 = require('../assets/images/smalltruck3.jpeg');
 
 const arrowImage = require('../assets/images/arrow.png'); 
 
+const lineImage = require('../assets/images/line.png');
+
 const Section4: React.FC = () => {
   const largeUpdate = {
     date: 'August 5, 2024',
@@ -36,6 +38,7 @@ const Section4: React.FC = () => {
     <View style={styles.sectionWrapper}>
          <View style={styles.contentWrapper}>
       <Text style={styles.topUpdatesTitle}>* Latest Updates</Text>
+      <Image source={lineImage} style={styles.lineImage} />
       <Text style={styles.newsText}>News and Expert Reviews on Truck</Text>
       <Text style={styles.rentalsText}>Rentals and Services</Text>
 
@@ -83,7 +86,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
-    height: 250,
+    height: 243,
     backgroundColor: '#fff',
     width: '100%',
   },
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
     color: '#007BFF',
     textAlign: 'center',
     marginBottom: 5,
-    top: 8,
+    top: 11,
   },
   newsText: {
     fontSize: 10,
@@ -242,6 +245,16 @@ const styles = StyleSheet.create({
     left: 12,
     top: -4,
   },
+
+  lineImage: {
+    width: '5%',
+    height: 5,
+    top: 7,
+    alignSelf: 'center',
+    tintColor: 'rgba(173, 216, 230, 0.8)',
+  },
+
+
 });
 
 export default Section4;
